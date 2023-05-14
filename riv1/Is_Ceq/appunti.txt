@@ -1,0 +1,15 @@
+----------------------------------------------
+dati Is: dati presi con il multimetro
+errori dipendono dal rage di tensione misurata
+
+errore tensione Valim = 0.01V
+errore tensione Vs = 0.001V
+errore corrente Is = errore resistenza combinato errore tensione 
+resistenza Rcarico = 100.4 kOhm
+errore Rcarico = 0.1 kOhm
+impedenza interna multimetro = 10 MOhm
+
+----------------------------------------------
+dati Ceq: dati presi con uno strumento apposta
+errori dipendono dal range di capacità
+errore Ceq = 3 pF

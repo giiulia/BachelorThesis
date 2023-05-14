@@ -1,0 +1,3 @@
+resistenza di carico = 0.987 MOhm
+errore della tensione di fuga = 0.1 mV
+errore della tensione di alimentazione = 0.01 V
