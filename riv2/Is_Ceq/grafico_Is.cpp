@@ -50,7 +50,7 @@ int main(int argc, char* argv[]){
 
       	v_corrente.push_back(v_fuga.at(i)/R[0]); //in nA
         v_corrente_err.push_back( sqrt(pow(0.1/R[0], 2) + pow(v_fuga.at(i)*R[1]/(R[0]*R[0]), 2)) );
-        cout<<"v_corrente_err.at(i): "<<sqrt(pow(0.1/R[0], 2) + pow(v_fuga.at(i)*R[1]/(R[0]*R[0]), 2))  <<endl;
+        cout<<"corrente ERRORE: errore dovuto alla tesione= "<<0.1/R[0] <<" errore dovuto alla resistenza= "<< v_fuga.at(i)*R[1]/(R[0]*R[0])<<" nA "<<endl;
       	
       	v_riv_err.push_back( sqrt(pow(0.01, 2) + pow(0.0001, 2)) );
 

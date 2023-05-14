@@ -49,8 +49,8 @@ int main(int argc, char* argv[]){
   		v_riv.push_back(v_alim.at(i) - v_fuga.at(i));
 
       	v_corrente.push_back(v_fuga.at(i)*pow(10, 6)/R[0]);
-        v_corrente_err.push_back( sqrt(pow(0.001*pow(10, 6)/R[0], 2) + pow(v_fuga.at(i)*R[1]*pow(10, 6)/(R[0]*R[0]), 2)) );
-        cout<<"v_corrente_err.at(i): "<<sqrt(pow(0.001*pow(10, 6)/R[0], 2) + pow(v_fuga.at(i)*R[1]*pow(10, 6)/(R[0]*R[0]), 2)) <<endl;
+        v_corrente_err.push_back( sqrt(pow(0.001*pow(10, 6)/R[0], 2) + pow(v_fuga.at(i)*R[1]*pow(10, 6)/(R[0]*R[0]), 2)) ); //precisione minore sulla tensione e reistenza minore danno grande errore (fattore 100) sulle correnti rispetto al riv 2
+        cout<<"corrente ERRORE: errore dovuto alla tesione= "<<0.001*pow(10, 6)/R[0]<<" errore dovuto alla resistenza= "<< v_fuga.at(i)*R[1]*pow(10, 6)/(R[0]*R[0])<< "nA" <<endl;
       	if(i < 8){
       		v_riv_err.push_back( sqrt(pow(0.01, 2) + pow(0.001, 2)) );
       	}
