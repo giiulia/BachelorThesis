@@ -141,14 +141,16 @@ int main(int argc, char* argv[]){
 
   	for(int i = 0; i < v_sh_time.size(); i++){
   		
-  		double values[] = { v_sorg1.at(i), v_sorg2.at(i), v_sorg3.at(i) };
-  		double errors[] = { v_sorg_err1.at(i), v_sorg_err2.at(i), v_sorg_err3.at(i) };
+  		double values_sorg[] = { v_sorg1.at(i), v_sorg2.at(i), v_sorg3.at(i) };
+  		double errors_sorg[] = { v_sorg_err1.at(i), v_sorg_err2.at(i), v_sorg_err3.at(i) };
 
+  		double values_imp[] = { v_imp1.at(i), v_imp2.at(i), v_imp3.at(i) };
+  		double errors_imp[] = { v_imp_err1.at(i), v_imp_err2.at(i), v_imp_err3.at(i) };
 
-  		v_sorg.push_back( calc_media_pesata(  values, errors  ) );
-  		v_sorg_err.push_back( calc_err_media_pesata(  errors  ) );
-  		v_imp.push_back( calc_media_pesata(  values, errors  ) );
-  		v_imp_err.push_back( calc_err_media_pesata(  errors  ) );
+  		v_sorg.push_back( calc_media_pesata(  values_sorg, errors_sorg  ) );
+  		v_sorg_err.push_back( calc_err_media_pesata(  errors_sorg  ) );
+  		v_imp.push_back( calc_media_pesata(  values_imp, errors_imp  ) );
+  		v_imp_err.push_back( calc_err_media_pesata(  errors_imp  ) );
 
   	}
 
@@ -180,23 +182,27 @@ int main(int argc, char* argv[]){
 	c.SetLeftMargin(0.15);
     c.SetBottomMargin(0.15);
  	
-  	TGraphErrors * g_sorg_sh_time = new TGraphErrors( v_sh_time.size(), &v_sh_time[0], &v_sorg[0], 0, &v_sorg_err[0] );
+ 	TMultiGraph *mg = new TMultiGraph();
+    mg->SetTitle(" ");
+
+    TGraphErrors * g_sorg_sh_time = new TGraphErrors( v_sh_time.size(), &v_sh_time[0], &v_sorg[0], 0, &v_sorg_err[0] );
   	TGraphErrors * g_imp_sh_time = new TGraphErrors( v_sh_time.size(), &v_sh_time[0], &v_imp[0], 0, &v_imp_err[0] );
 
-  	g_sorg_sh_time->SetTitle(" rivelatore ");
+	g_sorg_sh_time->SetTitle(" rivelatore ");
   	g_sorg_sh_time->SetMarkerColor(6);
   	g_sorg_sh_time->SetMarkerSize(1);
   	g_sorg_sh_time->SetMarkerStyle(20);
-	g_sorg_sh_time->GetXaxis()->SetTitle("shaping time [#mus]");
-  	g_sorg_sh_time->GetYaxis()->SetTitle("FWHM [keV]");
+	//g_sorg_sh_time->GetXaxis()->SetTitle("shaping time [#mus]");
+  	//g_sorg_sh_time->GetYaxis()->SetTitle("FWHM [keV]");
 	
   	g_imp_sh_time->SetTitle(" impulsatore ");
   	g_imp_sh_time->SetMarkerColor(4);
   	g_imp_sh_time->SetMarkerSize(1);
   	g_imp_sh_time->SetMarkerStyle(20);
 
-  	g_sorg_sh_time->Draw("AP");
- 	g_imp_sh_time->Draw("same") ;
+  	mg->Add(g_sorg_sh_time);
+    mg->Add(g_imp_sh_time);
+    mg->Draw("AP");
     
     c.BuildLegend() ; 
     c.Print("Grafici/fwhm_sh_time.pdf", "pdf");
