@@ -6,6 +6,7 @@
 #include <cmath>
 #include <ctime>
 
+#include "TH1F.h"
 #include "TGraphErrors.h"
 #include "TCanvas.h"
 #include "TF1.h"
@@ -69,19 +70,19 @@ int main(int argc, char* argv[]){
     ifstream dati;
  	dati.open("tentativo1.txt", ios::in);
 
-	vector<double> v_sh_time, v_sorg1, v_sorg_err1, v_imp1, v_imp_err1;
-	double Shtime, sorg, sorg_err, imp, imp_err;
+	vector<double> v_Vbias, v_sorg1, v_sorg_err1, v_imp1, v_imp_err1;
+	double Vbias, sorg, sorg_err, imp, imp_err;
 
 	dati.ignore(300, '\n');
 
   	while (!dati.eof()) {
 
-		dati >> Shtime;
+		dati >> Vbias;
       	dati >> sorg; //in keV
       	dati >> sorg_err;
       	dati >> imp;
       	dati >> imp_err;
-      	v_sh_time.push_back(Shtime);
+      	v_Vbias.push_back(Vbias);
       	v_sorg1.push_back(sorg);
       	v_sorg_err1.push_back(sorg_err);
       	v_imp1.push_back(imp);
@@ -99,7 +100,7 @@ int main(int argc, char* argv[]){
 
   	while (!dati.eof()) {
 
-		dati >> Shtime;
+		dati >> Vbias;
       	dati >> sorg; //in keV
       	dati >> sorg_err;
       	dati >> imp;
@@ -121,7 +122,7 @@ int main(int argc, char* argv[]){
 
   	while (!dati.eof()) {
 		
-		dati >> Shtime;
+		dati >> Vbias;
       	dati >> sorg; //in keV
       	dati >> sorg_err;
       	dati >> imp;
@@ -139,8 +140,8 @@ int main(int argc, char* argv[]){
 //media pesata tra i tentativi
 	vector <double> v_sorg, v_sorg_err, v_imp, v_imp_err;
 
-  	for(int i = 0; i < v_sh_time.size(); i++){
-  		
+  	for(int i = 0; i < v_Vbias.size(); i++){
+
   		double values_sorg[] = { v_sorg1.at(i), v_sorg2.at(i), v_sorg3.at(i) };
   		double errors_sorg[] = { v_sorg_err1.at(i), v_sorg_err2.at(i), v_sorg_err3.at(i) };
 
@@ -148,8 +149,10 @@ int main(int argc, char* argv[]){
   		double errors_imp[] = { v_imp_err1.at(i), v_imp_err2.at(i), v_imp_err3.at(i) };
 
   		v_sorg.push_back( calc_media_pesata(  values_sorg, errors_sorg  ) );
+
   		v_sorg_err.push_back( calc_err_media_pesata(  errors_sorg  ) );
   		v_imp.push_back( calc_media_pesata(  values_imp, errors_imp  ) );
+
   		v_imp_err.push_back( calc_err_media_pesata(  errors_imp  ) );
 
   	}
@@ -157,22 +160,26 @@ int main(int argc, char* argv[]){
 //analisi errori sistematici
   	vector <double> v_sistematici_sorg, v_sistematici_imp;
   	vector <double> v_sorg_err_completo, v_imp_err_completo;
-  	vector <double> v_sh_time_err;
+  	vector <double> v_Vbias_err;
 
-  	for(int i = 0; i < v_sh_time.size(); i++){
+  	for(int i = 0; i < v_Vbias.size(); i++){
   		
   		v_sistematici_sorg.push_back( min_max(  v_sorg1.at(i),  v_sorg2.at(i),  v_sorg3.at(i)  ) );
   		v_sistematici_imp.push_back( min_max(  v_imp1.at(i),  v_imp2.at(i),  v_imp3.at(i)  ) );
 
   	}
 
-  	for(int i = 0; i < v_sh_time.size(); i++){
+  	for(int i = 0; i < v_Vbias.size(); i++){
 
   		v_sorg_err_completo.push_back( v_sorg_err.at(i) + v_sistematici_sorg.at(i) );
 
   		v_imp_err_completo.push_back( v_imp_err.at(i) + v_sistematici_imp.at(i) );
 
-  		//v_sh_time_err.push_back( 0.1 );
+  		v_Vbias_err.push_back( 0.1 );
+
+  		cout<<"Vbias: "<<v_Vbias.at(i) << endl;
+  		cout<<"  sorg: "<<v_sorg.at(i) << " +- "<<v_sorg_err_completo.at(i)<< endl;
+  	  	cout<<"  imp: "<<v_imp.at(i) << " +- "<<v_imp_err_completo.at(i)<<"\n"<< endl;
 
 
   	}
@@ -183,27 +190,29 @@ int main(int argc, char* argv[]){
     c.SetBottomMargin(0.15);
  	
  	TMultiGraph *mg = new TMultiGraph();
-    mg->SetTitle(" ; shaping time [#mus]; FWHM [keV]");
+    mg->SetTitle(" ; V bias [V]; FWHM [keV]");
 
-    TGraphErrors * g_sorg_sh_time = new TGraphErrors( v_sh_time.size(), &v_sh_time[0], &v_sorg[0], 0, &v_sorg_err_completo[0] );
-  	TGraphErrors * g_imp_sh_time = new TGraphErrors( v_sh_time.size(), &v_sh_time[0], &v_imp[0], 0, &v_imp_err_completo[0] );
+    cout<<"v_Vbias.size(): "<<v_Vbias.size()<<endl;
+    TGraphErrors * g_sorg_Vbias = new TGraphErrors( v_Vbias.size(), &v_Vbias[0], &v_sorg[0], &v_Vbias_err[0], &v_sorg_err_completo[0] );
+  	TGraphErrors * g_imp_Vbias = new TGraphErrors( v_Vbias.size(), &v_Vbias[0], &v_imp[0], &v_Vbias_err[0], &v_imp_err_completo[0] );
 
-	g_sorg_sh_time->SetTitle(" rivelatore ");
-  	g_sorg_sh_time->SetMarkerColor(6);
-  	g_sorg_sh_time->SetMarkerSize(1);
-  	g_sorg_sh_time->SetMarkerStyle(20);
-  	
-  	g_imp_sh_time->SetTitle(" impulsatore ");
-  	g_imp_sh_time->SetMarkerColor(4);
-  	g_imp_sh_time->SetMarkerSize(1);
-  	g_imp_sh_time->SetMarkerStyle(20);
+	g_sorg_Vbias->SetTitle(" rivelatore ");
+  	g_sorg_Vbias->SetMarkerColor(6);
+  	g_sorg_Vbias->SetMarkerSize(1);
+  	g_sorg_Vbias->SetMarkerStyle(20);
 
-  	mg->Add(g_sorg_sh_time);
-    mg->Add(g_imp_sh_time);
+	
+  	g_imp_Vbias->SetTitle(" impulsatore ");
+  	g_imp_Vbias->SetMarkerColor(4);
+  	g_imp_Vbias->SetMarkerSize(1);
+  	g_imp_Vbias->SetMarkerStyle(20);
+
+  	mg->Add(g_sorg_Vbias);
+    mg->Add(g_imp_Vbias);
     mg->Draw("AP");
     
     c.BuildLegend() ; 
-    c.Print("Grafici/fwhm_sh_time.pdf", "pdf");
+    c.Print("Grafici/fwhm_Vbias.pdf", "pdf");
 
     theApp.Run();
 

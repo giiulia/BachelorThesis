@@ -32,31 +32,27 @@ int main(int argc, char* argv[]){
 
      	dati >> Valim;
       	dati >> Vfuga;
-      	v_alim.push_back(-Valim);
-      	v_fuga.push_back(-Vfuga);
+      	v_alim.push_back(-Valim); //in V
+      	v_fuga.push_back(-Vfuga); //in mV
 
  	}
   	
   	dati.close();
 
 //manipolazione dati ed errori
-  	double R[] = {100.4, 0.1}; //kOhm
+  	double R[] = {0.987, 0.001}; //MOhm
 
 	vector<double> v_riv, v_corrente; // la tensione di alimentazione che effettivamente arriva al rivelatore è meno di v Alim
 	vector<double> v_riv_err, v_corrente_err;
 
   	for(int i = 0; i < v_alim.size(); i++){
-  		v_riv.push_back(v_alim.at(i) - v_fuga.at(i));
+  		v_riv.push_back(v_alim.at(i) - v_fuga.at(i)*pow(10, -3));
 
-      	v_corrente.push_back(v_fuga.at(i)*pow(10, 6)/R[0]);
-        v_corrente_err.push_back( sqrt(pow(0.001*pow(10, 6)/R[0], 2) + pow(v_fuga.at(i)*R[1]*pow(10, 6)/(R[0]*R[0]), 2)) );
-        cout<<"v_corrente_err.at(i): "<<sqrt(pow(0.001*pow(10, 6)/R[0], 2) + pow(v_fuga.at(i)*R[1]*pow(10, 6)/(R[0]*R[0]), 2)) <<endl;
-      	if(i < 8){
-      		v_riv_err.push_back( sqrt(pow(0.01, 2) + pow(0.001, 2)) );
-      	}
-      	else{
-      		v_riv_err.push_back( sqrt(pow(0.1, 2) + pow(0.001, 2)) );
-      	}
+      	v_corrente.push_back(v_fuga.at(i)/R[0]); //in nA
+        v_corrente_err.push_back( sqrt(pow(0.1/R[0], 2) + pow(v_fuga.at(i)*R[1]/(R[0]*R[0]), 2)) );
+        cout<<"v_corrente_err.at(i): "<<sqrt(pow(0.1/R[0], 2) + pow(v_fuga.at(i)*R[1]/(R[0]*R[0]), 2))  <<endl;
+      	
+      	v_riv_err.push_back( sqrt(pow(0.01, 2) + pow(0.0001, 2)) );
 
   	}
 
@@ -68,6 +64,7 @@ int main(int argc, char* argv[]){
   	TGraphErrors g_Is(v_alim.size(), &v_riv[0], &v_corrente[0], &v_riv_err[0], &v_corrente_err[0]);
 
   	g_Is.SetTitle(" ");
+  	g_Is.SetMarkerSize(0.7);
   	g_Is.SetMarkerStyle(20);
 	g_Is.GetXaxis()->SetTitle("V al rivelatore [V]");
   	g_Is.GetYaxis()->SetTitle("I fuga [nA]");
@@ -79,13 +76,15 @@ int main(int argc, char* argv[]){
 
 
 //analisi
-    double Rvoltmetro = 10000; //10 MOhm in kOhm
-    double Req = Rvoltmetro*R[0]/( Rvoltmetro + R[0] ); // in kOhm
+    double Rvoltmetro = 10; //10 MOhm 
+    double Req = Rvoltmetro*R[0]/( Rvoltmetro + R[0] ); // in MOhm
   	cout<<"I(1)/I(tot)%: "<<Req*100/R[0]<<endl;
 
 	for(int i = 0; i < v_fuga.size(); i++){
-  		cout<<"I(1): "<<v_fuga.at(i)*pow(10, 6)/R[0]<<" nA;"<<"		I(2): "<<v_fuga.at(i)*pow(10, 6)*(1/Req - 1/R[0])<<" nA"<<endl;
+  		cout<<"I(1): "<<v_fuga.at(i)/R[0]<<" nA;"<<"		I(2): "<<v_fuga.at(i)*(1/Req - 1/R[0])<<" nA"<<endl;
   	}
+
+    c.Print("Grafici/grafico_Is.pdf", "pdf") ; 
 
     theApp.Run();
 

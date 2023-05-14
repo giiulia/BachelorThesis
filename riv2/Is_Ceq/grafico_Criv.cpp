@@ -50,7 +50,7 @@ int main(int argc, char* argv[]){
 
       	v_criv_err.push_back( pow(10, -3)*sqrt(pow(3, 2) + pow(Ccavo_Cs[1], 2)) );
         cout<<"v_criv_err.at(i): "<<pow(10, -3)*sqrt(pow(1, 2) + pow(Ccavo_Cs[1], 2)) << "nF" <<endl;
-      	if(i < 8){
+      	if(i < 13){
       		v_alim_err.push_back( sqrt(pow(0.01, 2)) );
       	}
       	else{
