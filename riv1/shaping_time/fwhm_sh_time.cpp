@@ -16,6 +16,12 @@
 #include "TMultiGraph.h"
 #include "TStyle.h"
 
+double funzioneFWHM (double * x, double * par){
+
+    return sqrt(par[0]/x[0] + par[1]*x[0]);
+
+}
+
 using namespace std;
 
 double min_max( double t1, double t2, double t3 ){ //restituisce l'errore sistematico
@@ -177,6 +183,14 @@ int main(int argc, char* argv[]){
 
   	}
 
+//interpolazione
+	TF1 modelloFWHM ("funzioneFWHM", funzioneFWHM, 0.5, 10, 2);
+	modelloFWHM.SetParName(0, "k_C"); 
+	modelloFWHM.SetParName(1, "k_I");
+	//modelloFWHM.SetParameter (0, 280); 
+	modelloFWHM.SetParameter (1, 3000000);
+
+
 //grafico
   	TCanvas c;
 	c.SetLeftMargin(0.15);
@@ -192,18 +206,22 @@ int main(int argc, char* argv[]){
   	g_sorg_sh_time->SetMarkerColor(6);
   	g_sorg_sh_time->SetMarkerSize(1);
   	g_sorg_sh_time->SetMarkerStyle(20);
+    TFitResultPtr fit_result = g_sorg_sh_time->Fit (&modelloFWHM, "SQ+") ;
+
   	
   	g_imp_sh_time->SetTitle(" impulsatore ");
   	g_imp_sh_time->SetMarkerColor(4);
   	g_imp_sh_time->SetMarkerSize(1);
   	g_imp_sh_time->SetMarkerStyle(20);
+    TFitResultPtr fit_result2 = g_imp_sh_time->Fit (&modelloFWHM, "SQ+") ;
+
 
   	mg->Add(g_sorg_sh_time);
     mg->Add(g_imp_sh_time);
     mg->Draw("AP");
     
     c.BuildLegend() ; 
-    c.Print("Grafici/fwhm_sh_time.pdf", "pdf");
+   // c.Print("Grafici/fwhm_sh_time.pdf", "pdf");
 
     theApp.Run();
 

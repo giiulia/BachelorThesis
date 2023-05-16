@@ -16,6 +16,12 @@
 #include "TMultiGraph.h"
 #include "TStyle.h"
 
+double funzioneIs (double * x, double * par){
+
+    return par[0]+par[1]*(exp(x[0]/par[2]) - 1) ;
+
+}
+
 using namespace std;
 int main(int argc, char* argv[]){
 	TApplication theApp("theApp", &argc, argv);
@@ -60,6 +66,16 @@ int main(int argc, char* argv[]){
 
   	}
 
+//interpolazione
+	TF1 modelloIs ("funzioneIs", funzioneIs, -90, 0, 3);
+	modelloIs.SetParName(0, "offset"); //come se ci fosse una corrente non ideale in più
+	modelloIs.SetParName(1, "Is");
+  	modelloIs.SetParName(2, "n Vd");
+	//modelloIs.SetParameter (0, 260); 
+	modelloIs.SetParameter (1, 280); 
+	modelloIs.SetParameter (2, 52000);
+	
+ 
 //grafico
   	TCanvas c;
 	c.SetLeftMargin(0.15);
@@ -72,10 +88,11 @@ int main(int argc, char* argv[]){
 	g_Is.GetXaxis()->SetTitle("V al rivelatore [V]");
   	g_Is.GetYaxis()->SetTitle("I fuga [nA]");
 
+    TFitResultPtr fit_result = g_Is.Fit (&modelloIs, "SQ+") ;
 
  	g_Is.Draw("AP") ;
     
-    c.Print("Grafici/grafico_Is.pdf", "pdf") ; 
+    c.Print("Grafici/grafico_Is.pdf", "pdf"); 
 
 
 //analisi
