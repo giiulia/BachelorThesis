@@ -70,7 +70,7 @@ int main(int argc, char* argv[]){
 	TF1 modelloIs ("funzioneIs", funzioneIs, -90, 0, 3);
 	modelloIs.SetParName(0, "offset"); //come se ci fosse una corrente non ideale in più
 	modelloIs.SetParName(1, "Is");
-  	modelloIs.SetParName(2, "n Vd");
+  	modelloIs.SetParName(2, "n V_{th}");
 	//modelloIs.SetParameter (0, 260); 
 	modelloIs.SetParameter (1, 280); 
 	modelloIs.SetParameter (2, 52000);
@@ -92,7 +92,7 @@ int main(int argc, char* argv[]){
 
  	g_Is.Draw("AP") ;
     
-    c.Print("Grafici/grafico_Is.pdf", "pdf"); 
+    //c.Print("Grafici/grafico_Is.pdf", "pdf"); 
 
 
 //analisi

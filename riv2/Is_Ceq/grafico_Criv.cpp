@@ -21,7 +21,7 @@ double funzioneC(double * x, double * par){
 }
 
 double funzioned(double * x, double * par){
-	return pow(10, 6)*sqrt(8.85*pow(10, -12)*2*x[0]/par[0]);
+	return pow(10, 6)*8.85*pow(10, -12)*2*sqrt(x[0]/par[0]);
 }
 
 using namespace std;
