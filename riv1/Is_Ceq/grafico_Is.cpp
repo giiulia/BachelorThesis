@@ -28,7 +28,7 @@ int main(int argc, char* argv[]){
  	gStyle->SetOptFit(1112);
 //lettura dati
     ifstream dati;
- 	dati.open("Dati/dati_Is.txt", ios::in);
+ 	dati.open("Dati/dati_Is_17.4_19gradi.txt", ios::in);
 
 	vector<double> v_alim, v_fuga;
     double Valim, Vfuga;
@@ -85,6 +85,10 @@ int main(int argc, char* argv[]){
 
   	g_Is.SetTitle(" ");
   	g_Is.SetMarkerStyle(20);
+  	g_Is.GetXaxis()->SetTitleSize(0.05);
+    g_Is.GetYaxis()->SetTitleSize(0.05);
+    g_Is.GetXaxis()->SetLabelSize(0.05);
+    g_Is.GetYaxis()->SetLabelSize(0.05);
 	g_Is.GetXaxis()->SetTitle("V al rivelatore [V]");
   	g_Is.GetYaxis()->SetTitle("I fuga [nA]");
 

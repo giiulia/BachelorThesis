@@ -63,7 +63,7 @@ int main(int argc, char* argv[]){
 	cout<<"Ccavo: "<<valore_Ccavo<< " +- "<<sigma_Ccavo<<" pF"<<endl;
   	for(int i = 0; i < v_alim.size(); i++){
   		v_criv.push_back(  pow(10, -3)*( (Ccavo[0]*(Cs[0]-v_ceq.at(i))-(Cs[0]*v_ceq.at(i)))/(v_ceq.at(i) - Cs[0]) )  ); // il 10^-3 è per ottenere i nF nel grafico
-
+  		cout<<"v_criv.at(i): "<<v_criv.at(i)<<endl;
       	v_criv_err.push_back( pow(10, -3)*sqrt(  pow(5*Cs[0]*Cs[0]/pow(v_ceq.at(i)-Cs[0], 2), 2) + pow(Ccavo[1], 2) + pow(Cs[1]*v_ceq.at(i)*v_ceq.at(i)/pow(v_ceq.at(i)-Cs[0], 2), 2)  ));
         cout<<"v_criv_err.at(i): "<<pow(10, -3)*sqrt(  pow(5*Cs[0]*Cs[0]/pow(v_ceq.at(i)-Cs[0], 2), 2) + pow(Ccavo[1], 2) + pow(Cs[1]*v_ceq.at(i)*v_ceq.at(i)/pow(v_ceq.at(i)-Cs[0], 2), 2)  ) << "nF" <<endl;
       	if(i < 8){
@@ -81,7 +81,7 @@ int main(int argc, char* argv[]){
 	modelloC.SetParameter (0, 11.5); 
 	modelloC.SetParName(1, "offset");
 	modelloC.SetParameter (1, 0.05);
-	modelloC.SetParName(2, "buffer");
+	modelloC.SetParName(2, "drop");
 	modelloC.SetParameter (2, -0.00001);
 	
 //grafico

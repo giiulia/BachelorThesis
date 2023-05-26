@@ -28,7 +28,7 @@ int main(int argc, char* argv[]){
  	gStyle->SetOptFit(1112);
 //lettura dati
     ifstream dati;
- 	dati.open("Dati/dati_Is.txt", ios::in);
+ 	dati.open("Dati/dati_Is_12.5_21gradi.txt", ios::in);
 
 	vector<double> v_alim, v_fuga;
     double Valim, Vfuga;
@@ -46,7 +46,7 @@ int main(int argc, char* argv[]){
   	dati.close();
 
 //analisi
-  	double R[] = {0.987, 0.001}; //MOhm
+  	double R[] = {0.987 MOhm, 0.001}; //MOhm
 
     double Rvoltmetro[] = {10, 0.01}; //MOhm 
     double Req[] = {Rvoltmetro[0]*R[0]/( Rvoltmetro[0] + R[0] ),  sqrt( pow(  (R[0]*R[0]*Rvoltmetro[1]/pow(R[0]+Rvoltmetro[0], 2)  ), 2) + pow(  (Rvoltmetro[0]*Rvoltmetro[0]*R[1]/pow(Rvoltmetro[0]*R[0], 2)  ), 2) )}; // in MOhm
@@ -91,6 +91,10 @@ int main(int argc, char* argv[]){
   	g_Is.SetTitle(" ");
   	g_Is.SetMarkerSize(0.5);
   	g_Is.SetMarkerStyle(20);
+  	g_Is.GetXaxis()->SetTitleSize(0.05);
+    g_Is.GetYaxis()->SetTitleSize(0.05);
+    g_Is.GetXaxis()->SetLabelSize(0.05);
+    g_Is.GetYaxis()->SetLabelSize(0.05);
 	g_Is.GetXaxis()->SetTitle("V al rivelatore [V]");
   	g_Is.GetYaxis()->SetTitle("I fuga [nA]");
 
