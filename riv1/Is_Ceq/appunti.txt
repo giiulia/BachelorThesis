@@ -1,4 +1,7 @@
 ----------------------------------------------
+17.4 - 19 gradi rivelatore con tappo
+29.5 - 21 gradi rivelatore senza tappo e con sorgente
+
 dati Is: dati presi con il multimetro
 errori dipendono dal rage di tensione misurata
 

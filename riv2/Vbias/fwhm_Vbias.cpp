@@ -29,7 +29,7 @@ int main(int argc, char* argv[]){
  	gStyle->SetOptFit(1112);
 //lettura dati
     ifstream dati;
- 	dati.open("dati_elaborati2.txt", ios::in);
+ 	dati.open("dati_elaborati_vecchi.txt", ios::in);
 
 	vector<double> v_Vbias, v_sorg, v_sorg_err, v_imp, v_imp_err;
 	double Vbias, sorg, sorg_err, imp, imp_err;
@@ -91,7 +91,7 @@ int main(int argc, char* argv[]){
     TGraphErrors * g_sorg_Vbias = new TGraphErrors( v_Vbias.size(), &v_Vbias[0], &v_sorg[0], &v_Vbias_err[0], &v_sorg_err_completo[0] );
   	TGraphErrors * g_imp_Vbias = new TGraphErrors( v_Vbias.size(), &v_Vbias[0], &v_imp[0], &v_Vbias_err[0], &v_imp_err_completo[0] );
 
-	g_sorg_Vbias->SetTitle(" rivelatore ");
+	g_sorg_Vbias->SetTitle(" sorgente ");
   	g_sorg_Vbias->SetMarkerColor(6);
   	g_sorg_Vbias->SetMarkerSize(1);
   	g_sorg_Vbias->SetMarkerStyle(20);

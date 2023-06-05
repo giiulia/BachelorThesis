@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
-#include <vector>
+#include <vector> 
 #include <string>
 #include <cmath>
 #include <ctime>
@@ -28,7 +28,7 @@ int main(int argc, char* argv[]){
  	gStyle->SetOptFit(1112);
 //lettura dati
     ifstream dati;
- 	dati.open("Dati/dati_Is_12.5_21gradi.txt", ios::in);
+ 	dati.open("Dati/dati_Is_2.5_19gradi.txt", ios::in);
 
 	vector<double> v_alim, v_fuga;
     double Valim, Vfuga;
@@ -46,10 +46,12 @@ int main(int argc, char* argv[]){
   	dati.close();
 
 //analisi
-  	double R[] = {0.987 MOhm, 0.001}; //MOhm
+  	//double R[] = {0.1004, 0.0001}; //MOhm
+  	double R[] = {0.987, 0.001}; //MOhm
 
     double Rvoltmetro[] = {10, 0.01}; //MOhm 
     double Req[] = {Rvoltmetro[0]*R[0]/( Rvoltmetro[0] + R[0] ),  sqrt( pow(  (R[0]*R[0]*Rvoltmetro[1]/pow(R[0]+Rvoltmetro[0], 2)  ), 2) + pow(  (Rvoltmetro[0]*Rvoltmetro[0]*R[1]/pow(Rvoltmetro[0]*R[0], 2)  ), 2) )}; // in MOhm
+  	cout<<"Req[0]: "<<Req[0]<<"MOhm; Req[1]: "<<Req[1]<<"MOhm"<<endl;
   	cout<<"I(1)/I(tot)%: "<<Req[0]*100/R[0]<<endl;
 
 	for(int i = 0; i < v_fuga.size(); i++){
@@ -104,7 +106,7 @@ int main(int argc, char* argv[]){
     
     //c.Print("Grafici/grafico_Is.pdf", "pdf") ; 
 
-    c.Print("Grafici/grafico_Is.pdf", "pdf") ; 
+  //  c.Print("Grafici/grafico_Is.pdf", "pdf") ; 
 
     theApp.Run();
 

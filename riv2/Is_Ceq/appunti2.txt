@@ -2,3 +2,7 @@ resistenza di carico = 0.987 MOhm per i dati del 2.5 e del 12.5
 					   100.4 kOhm per i dati del 26.5 - 28gradi
 errore della tensione di fuga = 0.1 mV
 errore della tensione di alimentazione = 0.01 V
+
+2.5: per la I fuga e la C il rivelatore aveva la sorgente e era senza tappo
+12.5: pure, sorgente e senza tappo. 5 volte di meno riv1 preso a un paio di gradi in meno.
+26.5: tappo e niente sorgente, il doppio piu alta rispetto a quando non aveva la sorgente, 7 gradi in piu pero. 2 volte di meno riv1 preso a quasi dieci gradi in meno.

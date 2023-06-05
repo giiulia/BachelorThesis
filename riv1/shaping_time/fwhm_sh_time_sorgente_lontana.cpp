@@ -52,7 +52,6 @@ int main(int argc, char* argv[]){
  	}
   	
   	dati.close();
-  	cout<<"ho finito di prendere i dati"<<endl;
 
 //analisi errori sistematici
   	vector <double> v_sorg_err_completo, v_imp_err_completo;
@@ -88,7 +87,7 @@ int main(int argc, char* argv[]){
     TGraphErrors * g_sorg_sh_time = new TGraphErrors( v_sh_time.size(), &v_sh_time[0], &v_sorg[0], 0, &v_sorg_err_completo[0] );
   	TGraphErrors * g_imp_sh_time = new TGraphErrors( v_sh_time.size(), &v_sh_time[0], &v_imp[0], 0, &v_imp_err_completo[0] );
 
-	g_sorg_sh_time->SetTitle(" rivelatore ");
+	g_sorg_sh_time->SetTitle(" sorgente ");
   	g_sorg_sh_time->SetMarkerColor(6);
   	g_sorg_sh_time->SetMarkerSize(1);
   	g_sorg_sh_time->SetMarkerStyle(20);
