@@ -29,7 +29,7 @@ int main(int argc, char* argv[]){
  	gStyle->SetOptFit(1112);
 //lettura dati
     ifstream dati;
- 	dati.open("dati_elaborati_vecchi.txt", ios::in);
+ 	dati.open("dati_elaborati2.txt", ios::in);
 
 	vector<double> v_Vbias, v_sorg, v_sorg_err, v_imp, v_imp_err;
 	double Vbias, sorg, sorg_err, imp, imp_err;

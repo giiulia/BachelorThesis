@@ -68,7 +68,7 @@ int main(int argc, char* argv[]){
 
       	v_criv_err.push_back( pow(10, -3)*sqrt(  pow(5*Cs[0]*Cs[0]/pow(v_ceq.at(i)-Cs[0], 2), 2) + pow(Ccavo[1], 2) + pow(Cs[1]*v_ceq.at(i)*v_ceq.at(i)/pow(v_ceq.at(i)-Cs[0], 2), 2)  ));
         cout<<"v_criv_err.at(i): "<<pow(10, -3)*sqrt(  pow(5*Cs[0]*Cs[0]/pow(v_ceq.at(i)-Cs[0], 2), 2) + pow(Ccavo[1], 2) + pow(Cs[1]*v_ceq.at(i)*v_ceq.at(i)/pow(v_ceq.at(i)-Cs[0], 2), 2)  ) << "nF" <<endl;
-      	if(i < 8){
+      	if(i < 15){
       		v_alim_err.push_back( sqrt(pow(0.01, 2)) );
       	}
       	else{
