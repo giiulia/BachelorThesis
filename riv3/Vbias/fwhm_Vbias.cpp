@@ -19,7 +19,7 @@
 
 double funzioneFWHM (double * x, double * par){
 
-    return sqrt(par[0]/x[0] + x[0]*par[1]);
+    return sqrt(par[0]/sqrt(x[0]) + x[0]*par[1]);
 
 }
 

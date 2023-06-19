@@ -1,0 +1,4 @@
+#shaping time[mus] 		risoluzione[keV]	errore risoluzione 		posizione[keV]	errore poszione[keV]		percentuale
+1 						27.753 				0.13738 				1597.215 		0.112
+3						28.586 				0.16863 				1615.224 		0.148 
+10						44.921 				0.22809					1607.617		0.199

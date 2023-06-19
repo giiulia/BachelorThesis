@@ -18,7 +18,7 @@
 
 double funzioneFWHM (double * x, double * par){
 
-    return sqrt(par[0]/x[0] + par[1]*x[0]);
+    return sqrt(par[0]/sqrt(x[0]) + par[1]*x[0]);
 
 }
 
@@ -68,45 +68,67 @@ int main(int argc, char* argv[]){
 
   	}
 
-//interpolazione
-	TF1 modelloFWHM ("funzioneFWHM", funzioneFWHM, 0.5, 10, 2);
-	modelloFWHM.SetParName(0, "k_C"); 
-	modelloFWHM.SetParName(1, "k_I");
-	//modelloFWHM.SetParameter (0, 280); 
-	modelloFWHM.SetParameter (1, 3000000);
 
+//grafico interpolatos
+    TCanvas c1;
+    c1.SetLeftMargin(0.15);
+    c1.SetBottomMargin(0.15);
+ 	
+ 	TMultiGraph *mg1 = new TMultiGraph();
+    mg1->SetTitle(" ; shaping time [#mus]; FWHM [keV]");
+
+    TGraphErrors * g_sorg_sh_time1 = new TGraphErrors( v_sh_time.size(), &v_sh_time[0], &v_sorg[0], 0, &v_sorg_err_completo[0] );
+  	TGraphErrors * g_imp_sh_time1 = new TGraphErrors( v_sh_time.size(), &v_sh_time[0], &v_imp[0], 0, &v_imp_err_completo[0] );
+
+    TF1 modelloFWHM ("funzioneFWHM", funzioneFWHM, 0.5, 10, 2);
+    modelloFWHM.SetParName(0, "k_C"); 
+    modelloFWHM.SetParName(1, "k_I");
+    modelloFWHM.SetParameter (0, 1750); 
+    modelloFWHM.SetParameter (1, 40);
+
+
+	g_sorg_sh_time1->SetTitle(" sorgente ");
+  	g_sorg_sh_time1->SetMarkerColor(6);
+  	g_sorg_sh_time1->SetMarkerSize(1);
+  	g_sorg_sh_time1->SetMarkerStyle(20);
+    TFitResultPtr fit_result = g_sorg_sh_time1->Fit (&modelloFWHM, "SQ+") ;  	
+  	
+
+    g_imp_sh_time1->SetTitle(" impulsatore ");
+  	g_imp_sh_time1->SetMarkerColor(4);
+  	g_imp_sh_time1->SetMarkerSize(1);
+  	g_imp_sh_time1->SetMarkerStyle(20);
+    TFitResultPtr fit_result2 = g_imp_sh_time1->Fit (&modelloFWHM, "SQ+") ;
+
+
+    mg1->Add(g_sorg_sh_time1);
+    mg1->Add(g_imp_sh_time1);
+    mg1->Draw("AP");
+    
+    c1.BuildLegend() ; 
+    
+//differenze quadratiche
+    vector<double> v_diff, v_diff_err;
+    for(int i = 0; i<v_sh_time.size(); i++){
+
+    	v_diff.push_back( sqrt(pow(v_sorg.at(i), 2) - pow(v_imp.at(i), 2)) );
+    	v_diff_err.push_back(  sqrt(pow(v_sorg.at(i)*v_sorg_err_completo.at(i), 2) + pow(v_imp.at(i)*v_imp_err_completo.at(i), 2))/sqrt(pow(v_sorg.at(i), 2) - pow(v_imp.at(i), 2))  );
+
+    } 
 
 //grafico
-  	TCanvas c;
-	c.SetLeftMargin(0.15);
-    c.SetBottomMargin(0.15);
- 	
- 	TMultiGraph *mg = new TMultiGraph();
-    mg->SetTitle(" ; shaping time [#mus]; FWHM [keV]");
+    TCanvas c2;
+	c2.SetLeftMargin(0.15);
+    c2.SetBottomMargin(0.15);
 
-    TGraphErrors * g_sorg_sh_time = new TGraphErrors( v_sh_time.size(), &v_sh_time[0], &v_sorg[0], 0, &v_sorg_err_completo[0] );
-  	TGraphErrors * g_imp_sh_time = new TGraphErrors( v_sh_time.size(), &v_sh_time[0], &v_imp[0], 0, &v_imp_err_completo[0] );
+    TGraphErrors * g_diff = new TGraphErrors( v_sh_time.size(), &v_sh_time[0], &v_diff[0], 0, &v_diff_err[0] );
+    g_diff->SetTitle(" ; shaping time [#mus]; #sqrt{#Delta sq} [keV]");
 
-	g_sorg_sh_time->SetTitle(" sorgente ");
-  	g_sorg_sh_time->SetMarkerColor(6);
-  	g_sorg_sh_time->SetMarkerSize(1);
-  	g_sorg_sh_time->SetMarkerStyle(20);
-    TFitResultPtr fit_result = g_sorg_sh_time->Fit (&modelloFWHM, "SQ+") ;
+  	g_diff->SetMarkerColor(6);
+  	g_diff->SetMarkerSize(1);
+  	g_diff->SetMarkerStyle(20);
 
-  	
-  	g_imp_sh_time->SetTitle(" impulsatore ");
-  	g_imp_sh_time->SetMarkerColor(4);
-  	g_imp_sh_time->SetMarkerSize(1);
-  	g_imp_sh_time->SetMarkerStyle(20);
-    TFitResultPtr fit_result2 = g_imp_sh_time->Fit (&modelloFWHM, "SQ+") ;
-
-
-  	mg->Add(g_sorg_sh_time);
-    mg->Add(g_imp_sh_time);
-    mg->Draw("AP");
-    
-    c.BuildLegend() ; 
-   // c.Print("Grafici/fwhm_sh_time.pdf", "pdf");
+  	g_diff->Draw("AP");
 
     theApp.Run();
 

@@ -25,58 +25,14 @@ double funzioneFWHM (double * x, double * par){
 
 using namespace std;
 
-double min_max( double t1, double t2, double t3 ){ //restituisce l'errore sistematico
-	double a[] = {t1, t2, t3};
-	double sist;
-	double min = 300;
-	double max = 10;
-	
-
-	for(int i = 0; i < 3; i++){
-		if(a[i] < min) 
-			min = a[i];
-		if(a[i] > max){
-			max = a[i];
-		}
-	}
-	sist = (max - min) /2.;
-
-	cout<<"errore sisetmatico: " << sist << endl;
-	return sist;
-
-}
-
-double calc_media_pesata( double values[], double errors[] ){
-	double media = 0;
-	double err_sum = 0;
-	for (int i = 0; i < 3; i++){
-		media += values[i]/pow(errors[i], 2);
-		err_sum += 1/pow(errors[i], 2);
-	}
-	media = media / err_sum;
-	return media;
-}
-
-double calc_err_media_pesata( double errors[] ){
-	double err;
-	double err_sum = 0;
-	for (int i = 0; i < 3; i++){
-		err_sum += 1/pow(errors[i], 2);
-	}
-	err = sqrt(1 / err_sum);
-	cout<<"errore casuale: " << err << endl;
-
-	return err;
-}
-
 int main(int argc, char* argv[]){
 	TApplication theApp("theApp", &argc, argv);
  	gStyle->SetOptFit(1112);
 //lettura dati
     ifstream dati;
- 	dati.open("tentativo1.txt", ios::in);
+ 	dati.open("dati_elaborati_sorgente_lontana.txt", ios::in);
 
-	vector<double> v_Vbias, v_sorg1, v_sorg_err1, v_imp1, v_imp_err1;
+	vector<double> v_Vbias, v_sorg, v_sorg_err, v_imp, v_imp_err;
 	double Vbias, sorg, sorg_err, imp, imp_err;
 
 	dati.ignore(300, '\n');
@@ -89,99 +45,27 @@ int main(int argc, char* argv[]){
       	dati >> imp;
       	dati >> imp_err;
       	v_Vbias.push_back(Vbias);
-      	v_sorg1.push_back(sorg);
-      	v_sorg_err1.push_back(sorg_err);
-      	v_imp1.push_back(imp);
-      	v_imp_err1.push_back(imp_err);
+      	v_sorg.push_back(sorg);
+      	v_sorg_err.push_back(sorg_err);
+      	v_imp.push_back(imp);
+      	v_imp_err.push_back(imp_err);
 
  	}
   	
   	dati.close();
 
-  	dati.open("tentativo2.txt", ios::in);
-
-  	vector<double> v_sorg2, v_sorg_err2, v_imp2, v_imp_err2;
-
-	dati.ignore(300, '\n');
-
-  	while (!dati.eof()) {
-
-		dati >> Vbias;
-      	dati >> sorg; //in keV
-      	dati >> sorg_err;
-      	dati >> imp;
-      	dati >> imp_err;
-      	v_sorg2.push_back(sorg);
-      	v_sorg_err2.push_back(sorg_err);
-      	v_imp2.push_back(imp);
-      	v_imp_err2.push_back(imp_err);
-
- 	}
-  	
-  	dati.close();
-
-	dati.open("tentativo3.txt", ios::in);
-
-  	vector<double> v_sorg3, v_sorg_err3, v_imp3, v_imp_err3;
-
-	dati.ignore(300, '\n');
-
-  	while (!dati.eof()) {
-		
-		dati >> Vbias;
-      	dati >> sorg; //in keV
-      	dati >> sorg_err;
-      	dati >> imp;
-      	dati >> imp_err;
-      	v_sorg3.push_back(sorg);
-      	v_sorg_err3.push_back(sorg_err);
-      	v_imp3.push_back(imp);
-      	v_imp_err3.push_back(imp_err);
-
- 	}
-  	
-  	dati.close();
-
-
-//media pesata tra i tentativi
-	vector <double> v_sorg, v_sorg_err, v_imp, v_imp_err;
-
-  	for(int i = 0; i < v_Vbias.size(); i++){
-
-  		double values_sorg[] = { v_sorg1.at(i), v_sorg2.at(i), v_sorg3.at(i) };
-  		double errors_sorg[] = { v_sorg_err1.at(i), v_sorg_err2.at(i), v_sorg_err3.at(i) };
-
-  		double values_imp[] = { v_imp1.at(i), v_imp2.at(i), v_imp3.at(i) };
-  		double errors_imp[] = { v_imp_err1.at(i), v_imp_err2.at(i), v_imp_err3.at(i) };
-
-  		v_sorg.push_back( calc_media_pesata(  values_sorg, errors_sorg  ) );
-
-  		v_sorg_err.push_back( calc_err_media_pesata(  errors_sorg  ) );
-  		v_imp.push_back( calc_media_pesata(  values_imp, errors_imp  ) );
-
-  		v_imp_err.push_back( calc_err_media_pesata(  errors_imp  ) );
-
-  	}
 
 //analisi errori sistematici
-  	vector <double> v_sistematici_sorg, v_sistematici_imp;
   	vector <double> v_sorg_err_completo, v_imp_err_completo;
   	vector <double> v_Vbias_err;
 
   	for(int i = 0; i < v_Vbias.size(); i++){
-  		
-  		v_sistematici_sorg.push_back( min_max(  v_sorg1.at(i),  v_sorg2.at(i),  v_sorg3.at(i)  ) );
-  		v_sistematici_imp.push_back( min_max(  v_imp1.at(i),  v_imp2.at(i),  v_imp3.at(i)  ) );
 
-  	}
+  		v_sorg_err_completo.push_back( v_sorg_err.at(i) + 1 );
 
-  	for(int i = 0; i < v_Vbias.size(); i++){
+  		v_imp_err_completo.push_back( v_imp_err.at(i) + 1 );
 
-  		v_sorg_err_completo.push_back( v_sorg_err.at(i) + v_sistematici_sorg.at(i) );
-
-  		v_imp_err_completo.push_back( v_imp_err.at(i) + v_sistematici_imp.at(i) );
-
-  		v_Vbias_err.push_back( 0.1 );
+  		//v_Vbias_err.push_back( 0.1 );
 
   		cout<<"Vbias: "<<v_Vbias.at(i) << endl;
   		cout<<"  sorg: "<<v_sorg.at(i) << " +- "<<v_sorg_err_completo.at(i)<< endl;
