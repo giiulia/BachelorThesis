@@ -114,7 +114,30 @@ int main(int argc, char* argv[]){
     c.BuildLegend() ; 
   //  c.Print("Grafici/fwhm_Vbias.pdf", "pdf");
 
-    theApp.Run();
+ //differenze quadratiche
+    vector<double> v_diff, v_diff_err;
+    for(int i = 0; i<v_Vbias.size(); i++){
 
+    	v_diff.push_back( sqrt(pow(v_sorg.at(i), 2) - pow(v_imp.at(i), 2)) );
+    	v_diff_err.push_back(  sqrt(pow(v_sorg.at(i)*v_sorg_err_completo.at(i), 2) + pow(v_imp.at(i)*v_imp_err_completo.at(i), 2))/sqrt(pow(v_sorg.at(i), 2) - pow(v_imp.at(i), 2))  );
+
+    } 
+
+//grafico
+    TCanvas c1;
+	c1.SetLeftMargin(0.15);
+    c1.SetBottomMargin(0.15);
+
+    TGraphErrors * g_diff = new TGraphErrors( v_Vbias.size(), &v_Vbias[0], &v_diff[0], 0, &v_diff_err[0] );
+    g_diff->SetTitle(" ; Vbias [V]; #sqrt{#Delta sq} [keV]");
+
+  	g_diff->SetMarkerColor(6);
+  	g_diff->SetMarkerSize(1);
+  	g_diff->SetMarkerStyle(20);
+
+  	g_diff->Draw("AP");
+
+    theApp.Run();
+	
 	return 0;
 } 

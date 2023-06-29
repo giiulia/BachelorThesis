@@ -18,7 +18,7 @@
 
 double funzioneFWHM (double * x, double * par){
 
-    return sqrt(par[0]/x[0] + par[1]*x[0]);
+    return sqrt(par[0]*(1/x[0]) + par[1]*x[0]);
 
 }
 
@@ -72,6 +72,7 @@ int main(int argc, char* argv[]){
 	TF1 modelloFWHM ("funzioneFWHM", funzioneFWHM, 0.5, 10, 2);
 	modelloFWHM.SetParName(0, "k_C"); 
 	modelloFWHM.SetParName(1, "k_I");
+
 	//modelloFWHM.SetParameter (0, 280); 
 	modelloFWHM.SetParameter (1, 3000000);
 

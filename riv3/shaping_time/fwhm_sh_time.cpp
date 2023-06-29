@@ -1,4 +1,4 @@
-#include <iostream>
+ #include <iostream>
 #include <fstream>
 #include <cstdlib>
 #include <vector>
@@ -18,7 +18,7 @@
 
 double funzioneFWHM (double * x, double * par){
 
-    return sqrt(par[0]/sqrt(x[0]) + par[1]*x[0]);
+    return sqrt(par[0]*(1/x[0] + par[2]) + par[1]*x[0]);
 
 }
 
@@ -80,11 +80,15 @@ int main(int argc, char* argv[]){
     TGraphErrors * g_sorg_sh_time1 = new TGraphErrors( v_sh_time.size(), &v_sh_time[0], &v_sorg[0], 0, &v_sorg_err_completo[0] );
   	TGraphErrors * g_imp_sh_time1 = new TGraphErrors( v_sh_time.size(), &v_sh_time[0], &v_imp[0], 0, &v_imp_err_completo[0] );
 
-    TF1 modelloFWHM ("funzioneFWHM", funzioneFWHM, 0.5, 10, 2);
+    TF1 modelloFWHM ("funzioneFWHM", funzioneFWHM, 0.5, 10, 3);
     modelloFWHM.SetParName(0, "k_C"); 
     modelloFWHM.SetParName(1, "k_I");
+    modelloFWHM.SetParName(2, "#gamma Af");
+
     modelloFWHM.SetParameter (0, 1750); 
     modelloFWHM.SetParameter (1, 40);
+    modelloFWHM.SetParameter (2, 40);
+
 
 
 	g_sorg_sh_time1->SetTitle(" sorgente ");

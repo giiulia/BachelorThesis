@@ -1,4 +1,13 @@
 #shaping time[mus] 		risoluzione[keV]	errore risoluzione 		posizione[keV]	errore poszione[keV]		percentuale
-1 						27.753 				0.13738 				1597.215 		0.112
-3						28.586 				0.16863 				1615.224 		0.148 
-10						44.921 				0.22809					1607.617		0.199
+1 						27.753 				0.13738 				1597.215 		0.112 						1.74%
+3						28.586 				0.16863 				1615.224 		0.148  						1.77%
+10						44.921 				0.22809					1607.617		0.199 						2.80%
+
+-calibrati mettendoli alla stessa posizione dei picchi dell'impulsatore al st corrispondente-
+
+#shaping time[mus] 		risoluzione[keV]		errore risoluzione[keV] 		differenza con Digit[keV] 		errore differenza[keV]	
+1 						31.262 					0.18676 						12.266 							0.405		
+3 						32.020 					0.18860 						9.1580 							0.918
+10 						49.929  				0.25505  						21.253 							0.739
+
+in media: 19.59 pm 0.11
