@@ -70,8 +70,8 @@ int main(int argc, char* argv[]){
 
 //interpolazione
 	TF1 modelloFWHM ("funzioneFWHM", funzioneFWHM, 0.5, 10, 2);
-	modelloFWHM.SetParName(0, "k_C"); 
-	modelloFWHM.SetParName(1, "k_I");
+	modelloFWHM.SetParName(0, "C^{2} #alpha e_{n}^{2}"); 
+	modelloFWHM.SetParName(1, "#beta i_{n}^{2}");
 
 	//modelloFWHM.SetParameter (0, 280); 
 	modelloFWHM.SetParameter (1, 3000000);

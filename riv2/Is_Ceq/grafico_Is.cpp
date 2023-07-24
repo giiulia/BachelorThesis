@@ -28,7 +28,7 @@ int main(int argc, char* argv[]){
  	gStyle->SetOptFit(1112);
 //lettura dati
     ifstream dati;
- 	dati.open("Dati/dati_Is_2.5_19gradi.txt", ios::in);
+ 	dati.open("Dati/dati_Is_12.5_21gradi.txt", ios::in);
 
 	vector<double> v_alim, v_fuga;
     double Valim, Vfuga;

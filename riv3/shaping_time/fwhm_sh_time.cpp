@@ -18,7 +18,7 @@
 
 double funzioneFWHM (double * x, double * par){
 
-    return sqrt(par[0]*(1/x[0] + par[2]) + par[1]*x[0]);
+    return sqrt((par[0]/x[0] + par[1]) + par[2]*x[0]);
 
 }
 
@@ -81,9 +81,9 @@ int main(int argc, char* argv[]){
   	TGraphErrors * g_imp_sh_time1 = new TGraphErrors( v_sh_time.size(), &v_sh_time[0], &v_imp[0], 0, &v_imp_err_completo[0] );
 
     TF1 modelloFWHM ("funzioneFWHM", funzioneFWHM, 0.5, 10, 3);
-    modelloFWHM.SetParName(0, "k_C"); 
-    modelloFWHM.SetParName(1, "k_I");
-    modelloFWHM.SetParName(2, "#gamma Af");
+    modelloFWHM.SetParName(0, "C^{2} #alpha e_{n}^{2}"); 
+    modelloFWHM.SetParName(1, "C^{2} #gamma Af ");
+    modelloFWHM.SetParName(2, "#beta i_{n}^{2}");
 
     modelloFWHM.SetParameter (0, 1750); 
     modelloFWHM.SetParameter (1, 40);

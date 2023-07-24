@@ -19,7 +19,7 @@
 
 double funzioneFWHM (double * x, double * par){
 
-    return sqrt(par[0]*(1/x[0]) + par[1]*x[0]);
+    return sqrt(par[0]*(1/x[0]) + par[1]);
 
 }
 
@@ -29,7 +29,7 @@ int main(int argc, char* argv[]){
  	gStyle->SetOptFit(1112);
 //lettura dati
     ifstream dati;
- 	dati.open("dati_elaborati2.txt", ios::in);
+ 	dati.open("dati_elaborati.txt", ios::in);
 
 	vector<double> v_Vbias, v_sorg, v_sorg_err, v_imp, v_imp_err;
 	double Vbias, sorg, sorg_err, imp, imp_err;
@@ -74,8 +74,8 @@ int main(int argc, char* argv[]){
 
 //interpolazione
 	TF1 modelloFWHM ("funzioneFWHM", funzioneFWHM, 5, 70, 2);
-	modelloFWHM.SetParName(0, "k_C"); 
-	modelloFWHM.SetParName(1, "k_I");
+	modelloFWHM.SetParName(0, "#alpha'"); 
+	modelloFWHM.SetParName(1, "#gamma'");
 
 	modelloFWHM.SetParameter (0, 10000); 
 	modelloFWHM.SetParameter (1, 20);
