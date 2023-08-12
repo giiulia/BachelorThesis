@@ -1,0 +1,4 @@
+SIMULAZIONE 	~con -R1			~con -Rimp  		REALTA			
+distanza[cm]	fwhm[keV] 			fwhm[keV]		
+0.9				36.840+-0.126 		6.7761+-0.0199		52.022+-0.19411
+5.7 			29.529+-0.217 		4.8858+-0.0289		37.074+-0.353

@@ -1,0 +1,7 @@
+581.1 Mevcm^2/g 																				1.43763e-05cm*3.74g/cm^3*581.1 MeVcm^2/g = 
+L[cm] 	max	path[cm]	max path theta[gradi] 	std[cm] 		percentuale di alpha passate 	energia persa max
+0.5		1.43763e-05		-69.6475				1.66806e-06 	69.8% 							0.0312MeV
+1		8.39333e-06		-53.4366				6.2531e-07 		49.3% 							0.0182MeV
+3		5.48135e-06		-24.1912				8.91701e-08		20.2% 							0.0119Mev
+5.7		5.13784e-06		-13.302					2.55264e-08		10.9%							0.0112MeV
+7.5		5.08015e-06		-10.1909				1.48201e-08 	8.35% 							0.0110MeV
