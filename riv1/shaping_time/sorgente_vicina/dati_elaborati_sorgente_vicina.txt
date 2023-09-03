@@ -1,11 +1,11 @@
 #tentativo 1
 #shaping time[mus]	risoluzione sorgente[keV]		errore[keV]			risoluzione impulsatore		errore		
-0.5					57.081							0.16057				34.637						0.10831
-1 					60.253                          0.20212				32.603						0.10372
-2 					65.488  						0.21882   			35.942 						0.11727
-3 					75.888 							0.24523 			40.967 						0.13495
-6 					125.76 							0.37497  			98.867 						0.31569
-10 				    150.69 							0.44515 			177.19 					    0.45542
+0.5					56.984							0.18930				39.925						0.11261
+1 					52.407                          0.19447				32.603						0.10372
+2 					60.787 							1.22332   			35.224 						0.11727
+3 					73.284 							0.24523 			39.003 						0.13495
+6 					107.54 							0.37497  			95.410 						0.31569
+10 				    136.45 							0.44515 			111.40 					    0.45542
 
 #tentativo2
 #shaping time		risoluzione sorgente[keV]		errore[keV]			risoluzione impulsatore		errore		

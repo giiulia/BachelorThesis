@@ -6,8 +6,6 @@
 #include <chrono>
 #include <ctime>
 
-#include "TF1.h"
-#include "TF1Convolution.h"
 #include "TH1D.h"
 #include "TPad.h"
 #include "TStyle.h"
@@ -15,31 +13,40 @@
 #include "TApplication.h"
 #include "TCanvas.h"
 
+double exponential(double x){ //esponenziale che parte da 8840 all'altezza di 20 conteggi con 0.00241335 
+    return 20*exp(exp((x-8840)*0.000508222));
+}
 
-double exponential(double * x, double * par)
-  {
-    return 2.534*exp((x[0]-8700)*par[0]);
-  }
+double rand_range(double min, double max){
+    return min + (max - min)*rand()/static_cast<float> (RAND_MAX);
+}
 
-double gaussiana(double * x, double *par)
-  {
-    return par[0]*exp((x[0]-par[1])/pow(par[2], 2))/(sqrt(2*M_PI)*par[2]);
-  }
+double IsBelow(double f(double), double xMin, double xMax, double yMin, double yMax){ //DA 7430 A 8840
+    double x = rand_range(xMin, xMax);
+    double y = rand_range(yMin, yMax);
+
+    if(y < f(x)){
+        return x;
+    }
+    else return 0;
+}
 
 
 using namespace std;
 int main (int argc, char ** argv){
 
+    srand(time(NULL));
+
     TApplication theApp("theApp", &argc, argv);
-    int sum = 0;
-    double binSize = 5.24;
+    double f300 = 6.19;
+    double binSize = 1.200048;
     double eMin = 0;
-    double eMax = 10725.14 + 0.5*binSize;    // 10725.14 è l'ultima energia nel file
+    double eMax = 9998.199 + 0.5*binSize;
     int nBins = (eMax-eMin)/binSize;
     TH1D* h = new TH1D("hist_radio", "", nBins, eMin, eMax);
 
     double energy, counts;
-    ifstream misure("misure_radio.xy", ios::app);
+    ifstream misure("sorgradio300mum.xy", ios::app);
     if(!misure.is_open()){
         cout<<"il file non si è aperto"<<endl;
     }
@@ -48,10 +55,19 @@ int main (int argc, char ** argv){
         if(counts>1){
             h->Fill(energy, log10(counts));
         }
-        else h->Fill(energy, 0);
-        sum = sum + counts;
+        else h->Fill(energy, 0); 
     }
-    
+
+    double nHit = 0;
+    double x = 0;
+    while(nHit != 680){
+        x = IsBelow(exponential, 7430, 8840, 0, 100);
+        if(x != 0) {
+            h->Fill(x);
+            nHit++;
+        }
+    }
+  
 
     //gStyle->SetPalette(1);
 
@@ -66,43 +82,26 @@ int main (int argc, char ** argv){
     h->GetYaxis()->SetTitleSize(0.07);
     h->GetXaxis()->SetLabelSize(0.05);
     h->GetYaxis()->SetLabelSize(0.05);
-    h->SetFillColor (kRed) ;
-    h->GetYaxis()->SetNdivisions(505, kTRUE);
+    h->SetFillColor (kOrange) ;
 
-    double a = h->Integral(7272.2, 7377); //7322.2
+    double a = h->Integral(7317, 7327); //7322.2
     cout<<"INTEGRALE picco a 8785 keV: "<<a<<endl;
 
     h->Draw ("hist");
     //c1.SetLogy();
-    c1.Print ("spettro_radio_reale.pdf", "pdf") ;
+    c1.Print ("spettro_radio_sim300mum.pdf", "pdf") ;
    
-    cout<<"entries: "<<sum<<endl;
-
     TCanvas c2;
     c2.SetLeftMargin(.20);
     c2.SetBottomMargin(.20);
 
-    TF1 expon("expo", exponential, 7430., 8700., 1);
-    expon.SetParameter(0, 0.0005);
-
-    TFitResultPtr fit_result = h->Fit("expo", "S");
-
     h->Draw ("hist");
-    h->GetXaxis()->SetRangeUser(7000,9000);
+    h->GetXaxis()->SetRangeUser(8000,10000);
     //c2.SetLogy();
-    c2.Print ("spettro_radio_reale_zoom.pdf", "pdf") ; 
+    c2.Print ("spettro_radio_300mum_zoom.pdf", "pdf") ; 
+    
+    theApp.Run();   
 
-    TCanvas c3;
-    c3.SetLeftMargin(.20);
-    c3.SetBottomMargin(.20);
-    h->SetTitle(" ; energia[keV]; conteggi");
-
-    h->Draw ("hist");
-    h->GetXaxis()->SetRangeUser(0,2000);
-    h->SetMaximum(140000);
-    //c3.SetLogy();
-    c3.Print ("spettro_radio_lowEnergy.pdf", "pdf") ;  
-    theApp.Run();  
 
   
     return 0;

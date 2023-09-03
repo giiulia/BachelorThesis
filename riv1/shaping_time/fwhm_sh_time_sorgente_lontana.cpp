@@ -29,7 +29,7 @@ int main(int argc, char* argv[]){
  	gStyle->SetOptFit(1112);
 //lettura dati
     ifstream dati;
- 	dati.open("dati_elaborati_sorgente_lontana.txt", ios::in);
+ 	dati.open("dati_elaborati_noDigit.txt", ios::in);
 
 	vector<double> v_sh_time, v_sorg, v_sorg_err, v_imp, v_imp_err;
 	double Shtime, sorg, sorg_err, imp, imp_err;
