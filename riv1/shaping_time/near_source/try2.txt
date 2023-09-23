@@ -1,4 +1,4 @@
-#shaping time[mus]	resolution source[keV]			error[keV]			risolution pulser 			error		
+#Shaping time		source resolution[keV]			error[keV]			pulser resolution[keV]		error		
 0.5					59.645 							0.17598				34.625						0.10829
 1 					60.672							0.18919				32.370						0.10347
 2 					65.000 							0.21974 			35.946 						0.11724

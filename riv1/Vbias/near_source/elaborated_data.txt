@@ -1,5 +1,5 @@
-#tentativo 1
-#Vbias[v]		risoluzione sorgente 	errore 		risoluzione impulsatore 	errore
+#try 1
+#Vbias			source resolution[keV]	error[keV]	pulser resolution[keV]		error[keV]		
 5 				116.40 					0.34276 	99.309 						0.30734
 10 				89.307 					0.25119 	63.920 						0.20004
 15				70.126 					0.22821 	46.279 						0.14813
@@ -14,8 +14,8 @@
 60 				64.074 					0.17143     32.562 						0.10615
 63.4 			55.804 					0.18572 	31.282 						0.10279
 
-#tentativo 2
-#Vbias			risoluzione sorgente 	errore 		risoluzione impulsatore 	errore
+#try 2
+#Vbias			source resolution[keV]	error[keV]	pulser resolution[keV]		error[keV]		
 5 				116.78					0.34241		99.325 						0.30770
 10				86.794 					0.26051 	63.928 						0.19978
 15				73.752 					0.21165     46.253 						0.14783
@@ -30,8 +30,8 @@
 60 				64.132 					0.20318     32.554 						0.10626
 63.4 			58.491 					0.20718     31.267 						0.10254
 
-#tentativo 3
-#Vbias			risoluzione sorgente 	errore 		risoluzione impulsatore 	errore
+#try 3
+#Vbias			source resolution[keV]	error[keV]	pulser resolution[keV]		error[keV]		
 5 				116.78 					0.32274		99.290 						0.30702
 10				89.950 					0.24482 	63.921 						0.19997
 15				70.672 					0.22790 	46.252 						0.14784

@@ -1,3 +1,3 @@
-#Riv	risoluzione sorgente[keV]		errore[keV]			risoluzione impulsatore		errore		
+#Det	source resolution[keV]			error[keV]			pulser resolution[keV]		error		
 1 		32.292 							0.21381 			24.764 						0.13059
 3 		23.135 							0.13581 			13.168 						0.06887

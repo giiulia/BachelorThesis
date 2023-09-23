@@ -1,4 +1,4 @@
-#Vbias[v]		risoluzione sorgente 	errore 		risoluzione impulsatore 	errore
+#Vbias			source resolution[keV]	error[keV]	pulser resolution[keV]		error[keV]		
 15 				49.991 					0.54134 	45.280 						0.14304
 20 				46.256 					0.46630 	40.076 						0.12302
 25 				41.139 					0.47541 	37.269 						0.12494

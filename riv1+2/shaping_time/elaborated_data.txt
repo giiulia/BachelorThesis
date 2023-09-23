@@ -1,4 +1,4 @@
-#shaping time[mus]	risoluzione sorgente[keV]		errore[keV]			risoluzione impulsatore		errore		
+#Shaping time		source resolution[keV]			error[keV]			pulser resolution[keV]		error[keV]		
 0.5 				60.238 							0.71374 			54.869 						1.29760
 1 					52.477 							0.66635 			48.734 						0.76846
 2 					49.490 							0.69392  			44.769 						1.10328
