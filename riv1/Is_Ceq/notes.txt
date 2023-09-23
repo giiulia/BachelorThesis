@@ -1,0 +1,18 @@
+17.4.23 - 19 degrees 
+29.5.23 - 21 degrees 
+
+----------------------------------------------
+data Is: taken with multimeter
+errors depend on range of tension 
+
+error tension Valim = 0.01V
+error tension Vs = 0.001V
+error current Is = error resistance combined with error tension 
+resistance Rload = 100.4 kOhm
+error Rload = 0.1 kOhm
+internal impedence multimeter = 10 MOhm
+
+----------------------------------------------
+data Ceq: dati presi con uno strumento apposta
+errors depend on range of capacity
+error Ceq = 3 pF
