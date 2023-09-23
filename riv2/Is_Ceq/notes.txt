@@ -1,15 +1,16 @@
-17.4.23 - 19 degrees 
-29.5.23 - 21 degrees 
+2.5.23 -  19 degrees
+12.5.23 - 21 degrees 
+26.5.23 - 28 degrees
 
 ----------------------------------------------
 data Is: taken with multimeter
 errors depend on range of tension 
 
 error tension Valim = 0.01 V
-error tension Vs = 0.001 V
+error tension Vs = 0.1 mV
 error current Is = error resistance combined with error tension 
-resistance Rload = 100.4 kOhm
-error Rload = 0.1 kOhm
+resistance Rload = 0.987 MOhm (100.4 kOhm for data from 26.5)
+error Rload = 0.001 MOhm
 internal impedence multimeter = 10 MOhm
 
 ----------------------------------------------

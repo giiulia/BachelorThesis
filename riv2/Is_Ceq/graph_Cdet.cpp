@@ -37,7 +37,7 @@ int main(int argc, char* argv[]){
     double Valim, Ceq;
 	
 	data.ignore(50, '\n');
-  	while (!dati.eof()) {
+  	while (!data.eof()) {
  
      	data >> Valim; // in V
       	data >> Ceq; // in pF

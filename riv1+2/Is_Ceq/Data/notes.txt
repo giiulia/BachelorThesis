@@ -1,0 +1,6 @@
+6.6.23 in air
+9.6.23 in vacuum
+
+----------------------------------------------
+resistance Rload: 100.4 kOhm
+error Rload = 0.1 kOhm

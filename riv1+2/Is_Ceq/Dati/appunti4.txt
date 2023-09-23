@@ -1,3 +1,0 @@
-resistenza di carico: 100.4 kOhm
-dati 6.6 con aria
-dati 9.6 con vuoto

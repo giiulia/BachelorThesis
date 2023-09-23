@@ -17,70 +17,70 @@
 #include "TMultiGraph.h"
 #include "TStyle.h"
 
-double funzioneFWHM (double * x, double * par){
+double functionFWHM (double * x, double * par){
 
-    return sqrt(par[0]*(1/x[0]) + par[1]);
+    return sqrt(par[0]/x[0] + par[1]);
 
 }
 
 using namespace std;
+
 int main(int argc, char* argv[]){
 	TApplication theApp("theApp", &argc, argv);
  	gStyle->SetOptFit(1112);
-//lettura dati
-    ifstream dati;
- 	dati.open("dati_elaborati.txt", ios::in);
 
-	vector<double> v_Vbias, v_sorg, v_sorg_err, v_imp, v_imp_err;
-	double Vbias, sorg, sorg_err, imp, imp_err;
+//reading data
+    ifstream data;
+ 	data.open("elaborated_data.txt", ios::in);
 
-	dati.ignore(300, '\n');
+	vector<double> v_Vbias, v_source, v_source_err, v_puls, v_puls_err;
+	double Vbias, source, source_err, puls, puls_err;
 
-  	while (!dati.eof()) {
+	data.ignore(300, '\n');
 
-		dati >> Vbias;
-      	dati >> sorg; //in keV
-      	dati >> sorg_err;
-      	dati >> imp;
-      	dati >> imp_err;
+  	while (!data.eof()) {
+
+		data >> Vbias;
+      	data >> source; //in keV
+      	data >> source_err;
+      	data >> puls;
+      	data >> puls_err;
       	v_Vbias.push_back(Vbias);
-      	v_sorg.push_back(sorg);
-      	v_sorg_err.push_back(sorg_err);
-      	v_imp.push_back(imp);
-      	v_imp_err.push_back(imp_err);
+      	v_source.push_back(source);
+      	v_source_err.push_back(source_err);
+      	v_puls.push_back(puls);
+      	v_puls_err.push_back(puls_err);
 
  	}
   	
-  	dati.close();
+  	data.close();
 
-//analisi errori sistematici
-  	vector <double> v_sorg_err_completo, v_imp_err_completo;
+
+//analysis sistematic errors
+  	vector <double> v_source_err_complete, v_puls_err_complete;
   	vector <double> v_Vbias_err;
 
   	for(int i = 0; i < v_Vbias.size(); i++){
 
-  		v_sorg_err_completo.push_back( v_sorg_err.at(i) + 0.6 );
+  		v_source_err_complete.push_back( v_source_err.at(i) + 1 );
 
-  		v_imp_err_completo.push_back( v_imp_err.at(i) + 0.6 );
-
-  		v_Vbias_err.push_back( 0.1 );
+  		v_puls_err_complete.push_back( v_puls_err.at(i) + 1 );
 
   		cout<<"Vbias: "<<v_Vbias.at(i) << endl;
-  		cout<<"  sorg: "<<v_sorg.at(i) << " +- "<<v_sorg_err_completo.at(i)<< endl;
-  	  	cout<<"  imp: "<<v_imp.at(i) << " +- "<<v_imp_err_completo.at(i)<<"\n"<< endl;
+  		cout<<"  source: "<<v_source.at(i) << " +- "<<v_source_err_complete.at(i)<< endl;
+  	  	cout<<"  pulser: "<<v_puls.at(i) << " +- "<<v_puls_err_complete.at(i)<<"\n"<< endl;
 
 
   	}
 
-//interpolazione
-	TF1 modelloFWHM ("funzioneFWHM", funzioneFWHM, 5, 70, 2);
-	modelloFWHM.SetParName(0, "#alpha'"); 
-	modelloFWHM.SetParName(1, "#gamma'");
+//interpolation
+	TF1 modelFWHM ("functionFWHM", functionFWHM, 5, 70, 2);
+	modelFWHM.SetParName(0, "#alpha'"); 
+	modelFWHM.SetParName(1, "#gamma'");
+	modelFWHM.SetParameter (0, 10000); 
+	modelFWHM.SetParameter (1, 20);
 
-	modelloFWHM.SetParameter (0, 10000); 
-	modelloFWHM.SetParameter (1, 20);
-
-//grafico
+//graph
   	TCanvas c;
 	c.SetLeftMargin(0.20);
     c.SetBottomMargin(0.20);
@@ -89,46 +89,47 @@ int main(int argc, char* argv[]){
     mg->SetTitle(" ; V bias [V]; FWHM [keV]");
 
     cout<<"v_Vbias.size(): "<<v_Vbias.size()<<endl;
-    TGraphErrors * g_sorg_Vbias = new TGraphErrors( v_Vbias.size(), &v_Vbias[0], &v_sorg[0], &v_Vbias_err[0], &v_sorg_err_completo[0] );
-  	TGraphErrors * g_imp_Vbias = new TGraphErrors( v_Vbias.size(), &v_Vbias[0], &v_imp[0], &v_Vbias_err[0], &v_imp_err_completo[0] );
+    TGraphErrors * g_source_Vbias = new TGraphErrors( v_Vbias.size(), &v_Vbias[0], &v_source[0], &v_Vbias_err[0], &v_source_err_complete[0] );
+  	TGraphErrors * g_puls_Vbias = new TGraphErrors( v_Vbias.size(), &v_Vbias[0], &v_puls[0], &v_Vbias_err[0], &v_puls_err_complete[0] );
 
-	g_sorg_Vbias->SetTitle(" sorgente ");
-  	g_sorg_Vbias->SetMarkerColor(6);
-  	g_sorg_Vbias->SetMarkerSize(1);
-  	g_sorg_Vbias->SetMarkerStyle(20);
-    TFitResultPtr fit_result = g_sorg_Vbias->Fit (&modelloFWHM, "SQ+") ;
+	g_source_Vbias->SetTitle(" sorgente ");
+  	g_source_Vbias->SetMarkerColor(6);
+  	g_source_Vbias->SetMarkerSize(1);
+  	g_source_Vbias->SetMarkerStyle(20);
+    TFitResultPtr fit_result = g_source_Vbias->Fit (&modelFWHM, "SQ+") ;
 
 	
-  	g_imp_Vbias->SetTitle(" impulsatore ");
-  	g_imp_Vbias->SetMarkerColor(4);
-  	g_imp_Vbias->SetMarkerSize(1);
-  	g_imp_Vbias->SetMarkerStyle(20);
-    TFitResultPtr fit_result2 = g_imp_Vbias->Fit (&modelloFWHM, "SQ+") ;
+  	g_puls_Vbias->SetTitle(" impulsatore ");
+  	g_puls_Vbias->SetMarkerColor(4);
+  	g_puls_Vbias->SetMarkerSize(1);
+  	g_puls_Vbias->SetMarkerStyle(20);
+    TFitResultPtr fit_result2 = g_puls_Vbias->Fit (&modelFWHM, "SQ+") ;
 
 
-  	mg->Add(g_sorg_Vbias);
-    mg->Add(g_imp_Vbias);
+    mg->Add(g_source_Vbias);
+    mg->Add(g_puls_Vbias);
 
     mg->GetXaxis()->SetLabelSize(0.05);
     mg->GetYaxis()->SetLabelSize(0.05);
     mg->GetXaxis()->SetTitleSize(0.07);
     mg->GetYaxis()->SetTitleSize(0.07);
 
+
     mg->Draw("AP");
     
     c.BuildLegend() ; 
-  //  c.Print("Grafici/fwhm_Vbias.pdf", "pdf");
+  //  c.Print("Graphs/fwhm_Vbias.pdf", "pdf");
 
-//differenze quadratiche
+ //quadratic differences
     vector<double> v_diff, v_diff_err;
     for(int i = 0; i<v_Vbias.size(); i++){
 
-    	v_diff.push_back( sqrt(pow(v_sorg.at(i), 2) - pow(v_imp.at(i), 2)) );
-    	v_diff_err.push_back(  sqrt(pow(v_sorg.at(i)*v_sorg_err_completo.at(i), 2) + pow(v_imp.at(i)*v_imp_err_completo.at(i), 2))/sqrt(pow(v_sorg.at(i), 2) - pow(v_imp.at(i), 2))  );
+    	v_diff.push_back( sqrt(pow(v_source.at(i), 2) - pow(v_puls.at(i), 2)) );
+    	v_diff_err.push_back(  sqrt(pow(v_source.at(i)*v_source_err_complete.at(i), 2) + pow(v_puls.at(i)*v_puls_err_complete.at(i), 2))/sqrt(pow(v_source.at(i), 2) - pow(v_puls.at(i), 2))  );
 
     } 
 
-//grafico
+//graph
     TCanvas c1;
 	c1.SetLeftMargin(0.15);
     c1.SetBottomMargin(0.15);
