@@ -30,7 +30,7 @@ int main(int argc, char* argv[]){
  	gStyle->SetOptFit(1112);
 //lettura dati
     ifstream dati;
- 	dati.open("dati_elaborati_sorgente_lontana.txt", ios::in);
+ 	dati.open("dati_elaborati_noDigit.txt", ios::in);
 
 	vector<double> v_Vbias, v_sorg, v_sorg_err, v_imp, v_imp_err;
 	double Vbias, sorg, sorg_err, imp, imp_err;
@@ -83,8 +83,8 @@ int main(int argc, char* argv[]){
 
 //grafico
   	TCanvas c;
-	c.SetLeftMargin(0.15);
-    c.SetBottomMargin(0.15);
+	c.SetLeftMargin(0.20);
+    c.SetBottomMargin(0.20);
  	
  	TMultiGraph *mg = new TMultiGraph();
     mg->SetTitle(" ; V bias [V]; FWHM [keV]");
@@ -93,7 +93,7 @@ int main(int argc, char* argv[]){
     TGraphErrors * g_sorg_Vbias = new TGraphErrors( v_Vbias.size(), &v_Vbias[0], &v_sorg[0], &v_Vbias_err[0], &v_sorg_err_completo[0] );
   	TGraphErrors * g_imp_Vbias = new TGraphErrors( v_Vbias.size(), &v_Vbias[0], &v_imp[0], &v_Vbias_err[0], &v_imp_err_completo[0] );
 
-	g_sorg_Vbias->SetTitle(" rivelatore ");
+	g_sorg_Vbias->SetTitle(" sorgente ");
   	g_sorg_Vbias->SetMarkerColor(6);
   	g_sorg_Vbias->SetMarkerSize(1);
   	g_sorg_Vbias->SetMarkerStyle(20);
@@ -107,8 +107,15 @@ int main(int argc, char* argv[]){
     TFitResultPtr fit_result2 = g_imp_Vbias->Fit (&modelloFWHM, "SQ+") ;
 
 
-  	mg->Add(g_sorg_Vbias);
+    mg->Add(g_sorg_Vbias);
     mg->Add(g_imp_Vbias);
+
+    mg->GetXaxis()->SetLabelSize(0.05);
+    mg->GetYaxis()->SetLabelSize(0.05);
+    mg->GetXaxis()->SetTitleSize(0.07);
+    mg->GetYaxis()->SetTitleSize(0.07);
+
+
     mg->Draw("AP");
     
     c.BuildLegend() ; 

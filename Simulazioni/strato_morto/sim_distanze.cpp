@@ -20,19 +20,19 @@
 
 
 #define N 1e8 //tentativi
-#define diametroRivelatore 3.2 //in cm
+#define diametroRivelatore 3.4 //in cm
 #define spessoreMorto 0.000005 //in cm (50nm) 
 #define diametroSorgente 0.7 //in cm - da misura con calibro, controllare?
 
 
 int main (int argc, char ** argv){
-    double L = 3; //distanza tra sorgente e base superiore strato attivo in cm
+    double L = 5.7; //distanza tra sorgente e base superiore strato attivo in cm
 
     TApplication theApp("theApp", &argc, argv);
     srand(time(NULL)); 
     double path_lenght;
 
-    TH1F h_path("3cm", " ", sqrt(N), 0.015, spessoreMorto*15);
+    TH1F h_path("5.7cm", " ", sqrt(N), 0.015, spessoreMorto*1000);
 
     double r;  
     double rho;

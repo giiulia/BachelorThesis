@@ -18,7 +18,7 @@
 
 double funzioneIs (double * x, double * par){
 
-    return par[0]+par[1]*(exp(x[0]/par[2]) - 1) ;
+    return par[0]+par[1]*(exp(-x[0]/par[2]) - 1) ;
 
 }
 
@@ -38,7 +38,7 @@ int main(int argc, char* argv[]){
 
      	dati >> Valim;
       	dati >> Vfuga;
-      	v_alim.push_back(-Valim); //in V
+      	v_alim.push_back(Valim); //in V
       	v_fuga.push_back(-Vfuga); //in mV
 
  	}
@@ -64,7 +64,7 @@ int main(int argc, char* argv[]){
 	vector<double> v_riv_err, v_corrente_err;
 
   	for(int i = 0; i < v_alim.size(); i++){
-  		v_riv.push_back(v_alim.at(i) - v_fuga.at(i)*pow(10, -3));
+  		v_riv.push_back(v_alim.at(i) + v_fuga.at(i)*pow(10, -3));
 
       	v_corrente.push_back(v_fuga.at(i)/R[0] + v_fuga.at(i)*(1/Req[0] - 1/R[0])); //correzione, la corrente è di più di quella che passa su Rc. (Espressa in nA)
         v_corrente_err.push_back( sqrt(2*pow(0.1/R[0], 2) + 2*pow(v_fuga.at(i)*R[1]/(R[0]*R[0]), 2) + pow(0.1/Req[0], 2) + pow(Req[1]*v_fuga.at(i)/(Req[0]*Req[0]), 2) ) );
@@ -85,16 +85,16 @@ int main(int argc, char* argv[]){
 
 //grafico
   	TCanvas c;
-	c.SetLeftMargin(0.15);
-    c.SetBottomMargin(0.15);
+	c.SetLeftMargin(0.20);
+    c.SetBottomMargin(0.20);
  	
   	TGraphErrors g_Is(v_alim.size(), &v_riv[0], &v_corrente[0], &v_riv_err[0], &v_corrente_err[0]);
 
   	g_Is.SetTitle(" ");
   	g_Is.SetMarkerSize(0.5);
   	g_Is.SetMarkerStyle(20);
-  	g_Is.GetXaxis()->SetTitleSize(0.05);
-    g_Is.GetYaxis()->SetTitleSize(0.05);
+  	g_Is.GetXaxis()->SetTitleSize(0.07);
+    g_Is.GetYaxis()->SetTitleSize(0.07);
     g_Is.GetXaxis()->SetLabelSize(0.05);
     g_Is.GetYaxis()->SetLabelSize(0.05);
 	g_Is.GetXaxis()->SetTitle("V al rivelatore [V]");

@@ -106,6 +106,12 @@ int main(int argc, char* argv[]){
 
   	mg->Add(g_sorg_sh_time);
     mg->Add(g_imp_sh_time);
+
+    mg->GetXaxis()->SetLabelSize(0.05);
+    mg->GetYaxis()->SetLabelSize(0.05);
+    mg->GetXaxis()->SetTitleSize(0.07);
+    mg->GetYaxis()->SetTitleSize(0.07);
+
     mg->Draw("AP");
     
     c.BuildLegend() ; 

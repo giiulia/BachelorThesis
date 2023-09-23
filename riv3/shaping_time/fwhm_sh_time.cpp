@@ -71,8 +71,8 @@ int main(int argc, char* argv[]){
 
 //grafico interpolatos
     TCanvas c1;
-    c1.SetLeftMargin(0.15);
-    c1.SetBottomMargin(0.15);
+    c1.SetLeftMargin(0.20);
+    c1.SetBottomMargin(0.20);
  	
  	TMultiGraph *mg1 = new TMultiGraph();
     mg1->SetTitle(" ; shaping time [#mus]; FWHM [keV]");
@@ -107,7 +107,14 @@ int main(int argc, char* argv[]){
 
     mg1->Add(g_sorg_sh_time1);
     mg1->Add(g_imp_sh_time1);
+    
+    mg1->GetXaxis()->SetLabelSize(0.05);
+    mg1->GetYaxis()->SetLabelSize(0.05);
+    mg1->GetXaxis()->SetTitleSize(0.07);
+    mg1->GetYaxis()->SetTitleSize(0.07);
+
     mg1->Draw("AP");
+
     
     c1.BuildLegend() ; 
     

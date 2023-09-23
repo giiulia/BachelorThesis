@@ -88,16 +88,16 @@ int main(int argc, char* argv[]){
 
 //grafico
   	TCanvas c;
-	c.SetLeftMargin(0.15);
-    c.SetBottomMargin(0.15);
+	c.SetLeftMargin(0.20);
+    c.SetBottomMargin(0.20);
  	
   	TGraphErrors g_Ceq(v_alim.size(), &v_alim[0], &v_criv[0], &v_alim_err[0], &v_criv_err[0]);
 
   	g_Ceq.SetTitle(" ");
   	g_Ceq.SetMarkerStyle(20);
   	g_Ceq.SetMarkerSize(0.3);
-  	g_Ceq.GetXaxis()->SetTitleSize(0.05);
-    g_Ceq.GetYaxis()->SetTitleSize(0.05);
+  	g_Ceq.GetXaxis()->SetTitleSize(0.07);
+    g_Ceq.GetYaxis()->SetTitleSize(0.07);
     g_Ceq.GetXaxis()->SetLabelSize(0.05);
     g_Ceq.GetYaxis()->SetLabelSize(0.05);
 	g_Ceq.GetXaxis()->SetTitle("V al rivelatore [V]");
@@ -115,7 +115,9 @@ int main(int argc, char* argv[]){
 
 	for (int i = 0; i < v_alim.size(); i++){
 		v_d.push_back(  8.85*pow(10, -6)*12*A/(v_criv.at(i)*pow(10, -9))  ); //il 10^6 serve per ottenere dei micrometri
+		cout<<"d: "<<v_d.at(i)<<endl;
 		v_d_err.push_back(  pow(10, -3)*v_criv_err.at(i)*8.85*pow(10, -12)*12*A/pow((v_criv.at(i)*pow(10, -9)), 2)  );
+		cout<<"d_err: "<<v_d_err.at(i)<<endl;
 
 	}
 
@@ -131,16 +133,16 @@ int main(int argc, char* argv[]){
 
 //grafico regione di svuotamento
   	TCanvas c1;
-	c1.SetLeftMargin(0.15);
-    c1.SetBottomMargin(0.15);
+	c1.SetLeftMargin(0.20);
+    c1.SetBottomMargin(0.20);
  	
   	TGraphErrors g_d(v_alim.size(), &v_alim[0], &v_d[0], &v_alim_err[0], &v_d_err[0]);
 
   	g_d.SetTitle(" ");
   	g_d.SetMarkerStyle(20);
   	g_d.SetMarkerSize(0.3);
-  	g_d.GetXaxis()->SetTitleSize(0.05);
-    g_d.GetYaxis()->SetTitleSize(0.05);
+  	g_d.GetXaxis()->SetTitleSize(0.07);
+    g_d.GetYaxis()->SetTitleSize(0.07);
     g_d.GetXaxis()->SetLabelSize(0.05);
     g_d.GetYaxis()->SetLabelSize(0.05);
 	g_d.GetXaxis()->SetTitle("V al rivelatore [V]");

@@ -81,8 +81,8 @@ int main(int argc, char* argv[]){
 
 //grafico
   	TCanvas c;
-	c.SetLeftMargin(0.15);
-    c.SetBottomMargin(0.15);
+	c.SetLeftMargin(0.20);
+    c.SetBottomMargin(0.20);
  	
  	TMultiGraph *mg = new TMultiGraph();
     mg->SetTitle(" ; V bias [V]; FWHM [keV]");
@@ -107,6 +107,12 @@ int main(int argc, char* argv[]){
 
   	mg->Add(g_sorg_Vbias);
     mg->Add(g_imp_Vbias);
+
+    mg->GetXaxis()->SetLabelSize(0.05);
+    mg->GetYaxis()->SetLabelSize(0.05);
+    mg->GetXaxis()->SetTitleSize(0.07);
+    mg->GetYaxis()->SetTitleSize(0.07);
+
     mg->Draw("AP");
     
     c.BuildLegend() ; 
