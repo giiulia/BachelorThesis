@@ -73,8 +73,8 @@ int main (int argc, char ** argv){
     h1->SetStats(kFALSE);
     h1->GetXaxis()->SetTitle(" energia [keV]");
     h1->GetYaxis()->SetTitle(" conteggi ");
-    //h1->GetXaxis()->SetRangeUser(8500,9500);
-    //h1->SetMaximum(25000);
+    h1->GetXaxis()->SetRangeUser(8500,9500);
+    h1->SetMaximum(25000);
     h1->GetXaxis()->SetTitleSize(0.07);
     h1->GetYaxis()->SetTitleSize(0.07);
     h1->GetXaxis()->SetLabelSize(0.05);
