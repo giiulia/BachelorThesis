@@ -1,2 +1,3 @@
-#Detector1
-Leakage current and capacity are eloquent features for a semiconductor detector. I_{s} and C_{det} values were measured at various power supply voltages
+# Detector1
+- Leakage current and electrical capacity are noteworthy features for a semiconductor detector. [I<sub>s</sub> and C<sub>det</sub>](Detector1/Is_Ceq) values were measured at various power supply voltages. [Data](Detector1/Is_Ceq/Data) are stored in txt files. To visualize the trends I used ROOT CERN libraries [TGraphErrors](https://root.cern.ch/doc/master/classTGraphErrors.html) and [TCanvas](https://root.cern.ch/doc/master/classTCanvas.html), the [Graphs](Detector1/Is_Ceq/Graphs) obtained are displayed as PDFs.
+- Resolution performance is affected by the setting of reding chain parameters, such as the [shaping time](Detector1/Shaping_time) of the signal and the power supply ([V<sub>bias</sub>](Detector1/Vbias)). The energy spectrum was acquired with different electronic setup to identify the optimized energy resolution.
