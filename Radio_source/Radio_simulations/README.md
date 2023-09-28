@@ -6,4 +6,4 @@ Results of the [initial attempt](Radio_source/Radio_simulations/Graphs/hist_radi
 - an overestimation of the capacitance value, and thus an incorrect assessment of the depth range.
 Being the issue related to each peak of the spectrum ([test1](Radio_source/Radio_simulations/Graphs/peak_at_6288keV.pdf)) and each depth considerated, different geometric distributions of the source were taken in consideration:
 - exponential distribution
-- contamination of the detectors' dead layer due to recoil following the decay of unstable nuclei
+- contamination of the detectors' dead layer due to recoil following the decay of unstable nuclei.
