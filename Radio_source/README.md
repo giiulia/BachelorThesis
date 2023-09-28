@@ -1,5 +1,5 @@
 # Radio-224 Source
-This is a true example of the application of spectroscopy measurements. In this case, I acquired the spectrum of an implanted source of <sup>224</sup>Ra and compared the real spectrum with the result of simulations based on the Geant4 libraries.\
+This is a true example of the application of spectroscopy measurements. In this case, I acquired the spectrum of an implanted source of <sup>224</sup>Ra assumed to have uniform distribution and compared the real spectrum with the result of simulations based on the Geant4 libraries.\
 In order to compare multiple histograms I converted the histogram in [".Chn" format](Radio_source/Data/radio_measures16-20_july.Chn) to a [.xy file](Radio_source/Data/radio_measures.xy) that stores:
 - the central energy value of each bin in the first column,
 - the counts related to that bin in the second column.
