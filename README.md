@@ -16,3 +16,7 @@ The aforementioned signals were individually processed by an analog chain consis
 - a **peamplifier**, that channels all the current into a feedback circuit so as to return a voltage signal proportional to the charge produced in the detector,
 - an **amplifier**, that shapes the signal into a Gaussian,
 - a **multi-channel analyzer** which collects the amplitude of each signal and converts it to a discrete-channel system.
+  
+The interface of the multichannel analyzer with **MAESTRO software** via PC allows to obtain a histogram in ".Chn" format.
+
+The energy spectra (real or simulated) were analyzed using a program called **Tasso**, wich, relying on the MINUIT minimization package, executes fits of peaks with symmetric or asymmetric Gaussians by returning centroid position, FWHM resolution, area and rate at the peak. The Tasso program requires a specific type of input binary file. Therefore, it is necessary to convert ".Chn" files output from MAESTRO with the command: **_chn2tas FileIn_** where FileIn should be reported without the ".Chn" extension.
