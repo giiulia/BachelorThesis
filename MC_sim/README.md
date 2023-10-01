@@ -1,7 +1,7 @@
 # Monte Carlo simulations
 
 For the purpose of determining the most convenient **detector-source distance** for spectroscopy measures, performances of Detector1 were analyzed in two opposite geometric configurations within the spatial limits of the chamber:
-1. - [near source](../Single_detectors/Detector1/Shaping_time/Near_source)
+- [near source](../Single_detectors/Detector1/Shaping_time/Near_source)
 - [faraway source](../Single_detectors/Detector1/Shaping_time/Faraway_source)
   
 Monte Carlo simulations of multiple rectilinear trajectories allowed me to easily calculate the **maximum path through the detector's dead layer** given a geometric configuration. In [paths.txt](MC_sim/paths.txt) I listed the maximum paths for every distance simulated and the associated vertical inclination of the trajectory. This data allowed me to determine the medium **energy loss** of an alpha particle in the energy range of my experiments.\
