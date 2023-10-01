@@ -5,4 +5,4 @@ For the purpose of determining the most convenient **detector-source distance** 
 - [faraway source](Faraway_source).
 
 Less distance from the detector has been shown to induce greater fluctuations in the energy lost in the dead layer of the detector due to the widening of the solid angle of trajectories incident on the detector. 
-Therefore it was convenient to place the source as far away from the detector as possible.
+Therefore for subsequent measures care was taken to place the source as far away from the detector as possible.
