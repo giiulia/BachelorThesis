@@ -32,7 +32,7 @@ double exponential(double * x, double * par)
     return par[1]*exp((x[0]-8900)*par[0]);
   }
 
-double gaussiana(double * x, double *par)
+double gaussian(double * x, double *par)
   {
     return par[0]*exp((x[0]-par[1])/pow(par[2], 2))/(sqrt(2*M_PI)*par[2]);
   }
@@ -51,11 +51,11 @@ int main (int argc, char ** argv){
     TH1D* h2 = new TH1D("hist_radio_LowEnergy", "", nBins, eMin, eMax);
 
     double energy, counts;
-    ifstream misure("Data/radio_measures.xy", ios::app);
-    if(!misure.is_open()){
+    ifstream measures("Data/radio_measures.xy", ios::app);
+    if(!measures.is_open()){
         cout<<"file isn't open"<<endl;
     }
-    while (misure >> energy >> counts)
+    while (measures >> energy >> counts)
     {
         h1->Fill(energy, counts);
         sum = sum + counts;
